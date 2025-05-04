@@ -1,6 +1,6 @@
 async function correctEmailWithAI(text) {
-    const apiKey = process.env.OPENAI_API_KEY; // Replace with your actual API key
-    //const apiKey = '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'; // Replace with your actual API key
+    //const apiKey = process.env.OPENAI_API_KEY; // Replace with your actual API key
+    const apiKey = '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'; // Replace with your actual API key
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
