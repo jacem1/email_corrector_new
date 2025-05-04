@@ -1,27 +1,21 @@
 async function correctEmailWithAI(text) {
-    const apiKey = process.env.API_KEY; // Replace with your actual API key
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+    const response = await fetch('/.netlify/functions/correctEmail', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            model: "gpt-4o-mini", // Ensure the model parameter is included
-            messages: [
-                { "role": "user", "content": `Please correct the following email: "${text}"` }
-            ]
-        })
+        body: JSON.stringify({ text })
     });
 
     if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Error in API call: ${errorData.error.message}`);
+        throw new Error(`Error in API call: ${errorData.error}`);
     }
 
     const data = await response.json();
-    return data.choices[0].message.content; // Access the corrected text
+    return data.correctedText; // Access the corrected text
 }
+
 
 document.getElementById('emailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
