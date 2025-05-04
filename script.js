@@ -1,26 +1,40 @@
-// Simule une correction d'email (orthographe, grammaire, politesse)
-function correctEmail(text) {
-    // Exemple de corrections simples (à remplacer par une vraie API ou IA pour production)
-    let corrected = text;
-    corrected = corrected.replace(/\bim\b/gi, "I'm");
-    corrected = corrected.replace(/\bi am\b/gi, "I am");
-    corrected = corrected.replace(/\bpls\b/gi, "please");
-    corrected = corrected.replace(/\bthx\b/gi, "thanks");
-    corrected = corrected.replace(/\bregards\b/gi, "Regards");
-    corrected = corrected.replace(/\bi hope this email finds you well\b/gi, "I hope this email finds you well.");
-    // Correction de double espaces
-    corrected = corrected.replace(/  +/g, ' ');
-    // Correction de la majuscule en début de phrase
-    corrected = corrected.replace(/(^|[.!?]\s+)([a-z])/g, (m, sep, char) => sep + char.toUpperCase());
-    return corrected.trim();
+async function correctEmailWithAI(text) {
+    const apiKey = process.env.OPENAI_API_KEY; // Replace with your actual API key
+    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: "gpt-4o-mini", // Ensure the model parameter is included
+            messages: [
+                { "role": "user", "content": `Please correct the following email: "${text}"` }
+            ]
+        })
+    });
+
+    if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Error in API call: ${errorData.error.message}`);
+    }
+
+    const data = await response.json();
+    return data.choices[0].message.content; // Access the corrected text
 }
 
-document.getElementById('emailForm').addEventListener('submit', function(e) {
+document.getElementById('emailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const input = document.getElementById('emailInput').value;
-    const corrected = correctEmail(input);
-    document.getElementById('correctedEmail').textContent = corrected;
-    document.getElementById('resultSection').style.display = 'block';
+    
+    try {
+        const corrected = await correctEmailWithAI(input);
+        document.getElementById('correctedEmail').textContent = corrected;
+        document.getElementById('resultSection').style.display = 'block';
+    } catch (error) {
+        console.error('Error correcting email:', error);
+        alert('Failed to correct email. Please try again later.');
+    }
 });
 
 function copyCorrectedEmail() {
@@ -28,4 +42,4 @@ function copyCorrectedEmail() {
     navigator.clipboard.writeText(text).then(() => {
         alert('Corrected email copied to clipboard!');
     });
-} 
+}
