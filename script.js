@@ -1,5 +1,5 @@
 async function correctEmailWithAI(text) {
-    const response = await fetch('/.netlify/functions/correctEmail', {
+    const response = await fetch('correctEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
