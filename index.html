@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Corrector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">Email Corrector</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-body">
+                        <form id="emailForm">
+                            <div class="mb-3">
+                                <label for="emailInput" class="form-label">Your Email</label>
+                                <textarea class="form-control" id="emailInput" rows="10" placeholder="Paste or write your email here..." required></textarea>
+                            </div>
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">Correct</button>
+                            </div>
+                        </form>
+                        <div id="resultSection" class="mt-4" style="display:none;">
+                            <h5>Corrected Email:</h5>
+                            <div id="correctedEmail" class="border rounded p-3 bg-light"></div>
+                            <button class="btn btn-outline-secondary mt-3" onclick="copyCorrectedEmail()">Copy to Clipboard</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
