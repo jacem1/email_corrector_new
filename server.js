@@ -53,8 +53,8 @@ app.post('/deleteHistory', (req, res) => {
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    // Check credentials
-    if (username === adminUsername && bcrypt.compareSync(password, adminPasswordHash)) {
+    // Check credentials bcrypt.compareSync(password, adminPasswordHash)
+    if (username === adminUsername && password === adminPasswordHash) {
         // Authentication successful
         res.json({ success: true });
     } else {
