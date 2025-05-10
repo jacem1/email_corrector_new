@@ -1,0 +1,19 @@
+body {
+    background: #f8f9fa;
+}
+
+.card {
+    border-radius: 1rem;
+}
+
+#correctedEmail {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1.1rem;
+    white-space: pre-wrap;
+    min-height: 120px;
+}
+
+textarea.form-control {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 1.1rem;
+} 
