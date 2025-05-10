@@ -1,9 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
 const correctEmailWithAI = require('./functions/correctEmail'); // Import the function
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+// Store admin credentials from environment variables
+const adminUsername = process.env.ADMIN_USERNAME; // Access the username
+const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH; // Access the hashed password
 
 // Store history in memory (in a real application, you'd use a database)
 let history = [];
