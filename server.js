@@ -44,6 +44,18 @@ app.post('/deleteHistory', (req, res) => {
     }
 });
 
+// Login endpoint
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Check credentials
+    if (username === adminUsername && bcrypt.compareSync(password, adminPasswordHash)) {
+        // Authentication successful
+        res.json({ success: true });
+    } else {
+        res.status(401).json({ error: 'Invalid credentials' });
+    }
+});
 // Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
