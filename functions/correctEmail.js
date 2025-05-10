@@ -1,8 +1,7 @@
 const fetch = require('node-fetch');
 
-exports.handler = async (event) => {
-    const { text } = JSON.parse(event.body);
-    const apiKey = process.env.API_KEY; // Make sure to set this in your Netlify environment variables
+const correctEmailWithAI = async (text) => {
+    const apiKey = process.env.API_KEY; // Ensure this is set in your environment variables
 
     try {
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -21,21 +20,14 @@ exports.handler = async (event) => {
 
         if (!response.ok) {
             const errorData = await response.json();
-            return {
-                statusCode: response.status,
-                body: JSON.stringify({ error: errorData.error.message })
-            };
+            throw new Error(errorData.error.message);
         }
 
         const data = await response.json();
-        return {
-            statusCode: 200,
-            body: JSON.stringify({ correctedText: data.choices[0].message.content })
-        };
+        return data.choices[0].message.content; // Return the corrected text
     } catch (error) {
-        return {
-            statusCode: 500,
-            body: JSON.stringify({ error: 'Internal Server Error' })
-        };
+        throw new Error('Internal Server Error');
     }
 };
+
+module.exports = correctEmailWithAI; // Export the function
