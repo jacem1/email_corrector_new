@@ -4,6 +4,10 @@ document.getElementById('adminLoginForm').addEventListener('submit', function(e)
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
+        // Debugging: Log the username and password
+    console.log('Username:', username);
+    console.log('Password:', password);
+    
     // Send credentials to the server for validation
     fetch('/login', {
         method: 'POST',
@@ -20,6 +24,7 @@ document.getElementById('adminLoginForm').addEventListener('submit', function(e)
         } else {
             // Show error message
             document.getElementById('errorMessage').style.display = 'block';
+            console.log('Login failed: Invalid credentials'); // Log the failure
         }
     })
     .catch(error => {
