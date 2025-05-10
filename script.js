@@ -1,5 +1,5 @@
 async function correctEmailWithAI(text) {
-    const response = await fetch('correctEmail', {
+    const response = await fetch('/.netlify/functions/correctEmail', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -9,13 +9,12 @@ async function correctEmailWithAI(text) {
 
     if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(`Error in API call: ${errorData.error}`);
+        throw new Error(`Error in API call: ${errorData.error.message}`);
     }
 
     const data = await response.json();
     return data.correctedText; // Access the corrected text
 }
-
 
 document.getElementById('emailForm').addEventListener('submit', async function(e) {
     e.preventDefault();
